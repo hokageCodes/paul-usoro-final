@@ -25,21 +25,23 @@ const App = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setProgress((prev) => {
-        if (prev < 100) return prev + 10;
+      setProgress((prev) => Math.min(prev + 10, 100));
+
+      if (progress >= 100) {
         clearInterval(interval);
         setLoading(false);
-        return prev;
-      });
+      }
     }, 300);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [progress]);
 
   return (
     <>
       {loading ? (
-        <Loader percent={progress} />
+        <div className={`loader-container ${loading ? '' : 'hidden'}`}>
+          <Loader percent={progress} />
+        </div>
       ) : (
         <Router>
           <Navbar />
@@ -59,6 +61,7 @@ const App = () => {
             <Route path="/expertise/project-finance" element={<ProjectFinancePage />} />
             <Route path="/expertise/transportation-law" element={<TransportLawPage />} />
             <Route path="/expertise/aviation" element={<AviationPage />} />
+            <Route path="*" element={<LandingPage />} />
           </Routes>
           <Footer />
         </Router>
