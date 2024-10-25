@@ -1,0 +1,113 @@
+.pages {
+  color: #316685;
+  text-align: center;
+  font-size: calc(1.5rem + 2vw);
+  margin-top: 10%;
+}
+
+.navbar {
+  background-color: #ffffff; /* White background for navbar */
+  height: 80px;
+  display: flex;
+  justify-content: space-between; /* Space for logo and nav icon */
+  align-items: center;
+  font-size: 1.2rem;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.nav-icon {
+  display: none; /* Hidden by default */
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-between; /* Space for nav icon */
+  align-items: center;
+  width: 100%;
+  height: 80px;
+  max-width: 1500px;
+}
+
+.main-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.logo-image {
+  height: 60px; /* Adjust height as needed */
+  margin-left: 20px;
+}
+
+.nav-menu {
+  display: flex;
+  list-style: none;
+  text-align: center;
+  margin-right: 2rem;
+}
+
+.nav-links {
+  color: #01553d; /* Brand color */
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-bottom: 3px solid transparent; /* For active state underline */
+  transition: border-bottom 0.3s ease; /* Smooth transition */
+}
+
+.nav-links:hover,
+.nav-item.active .nav-links {
+  border-bottom: 3px solid #01553d; /* Active state underline */
+}
+
+.fa-code {
+  margin-left: 1rem;
+}
+
+.nav-item {
+  line-height: 40px;
+  margin-right: 1rem;
+}
+
+.nav-icon {
+  display: none; /* Hidden by default */
+}
+
+@media screen and (max-width: 960px) {
+  .nav-icon {
+    display: block; /* Show icon on mobile */
+    font-size: 1.8rem;
+    cursor: pointer;
+    color: #01553d; /* Hamburger icon color */
+    margin-right: 20px; /* Add some space from the edge */
+  }
+
+  .nav-menu {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border-top: 1px solid #fff;
+    position: absolute;
+    top: 80px;
+    left: -100%; /* Start hidden offscreen */
+    opacity: 0; /* Start hidden */
+    transition: all 0.5s ease;
+  }
+
+  .nav-menu.active {
+    left: 0;
+    opacity: 1; /* Show when active */
+    z-index: 1;
+    background: #ffffff; /* Ensure background matches */
+  }
+  .nav-links {
+    padding: 1.5rem;
+    width: 100%;
+    display: table;
+  }
+
+}
