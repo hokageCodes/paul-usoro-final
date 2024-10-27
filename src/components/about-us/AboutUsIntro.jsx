@@ -1,4 +1,7 @@
-import AboutImage from "../../assets/img/about-img.jpg";
+/* eslint-disable react/prop-types */
+import React from 'react';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 import TimelineSection from "../timeline/TimelineSection";
 
 const AboutUsIntro = () => {
@@ -15,25 +18,23 @@ const AboutUsIntro = () => {
             </span>
           </p>
         </div>
-        <div className="flex flex-col items-end justify-end w-full mt-3 mb-8 text-base">
-          {/* <p className="md:max-w-[510px] md:text-right md:mr-10 leading-[27px] text-xl leading-relaxed text-gray-600">
-            At PUC, we are dedicated to providing comprehensive legal
-            services tailored to meet the unique needs of our clients. Our team
-            of experienced attorneys is committed to navigating complex legal
-            landscapes, ensuring you receive the support and guidance you
-            deserve.
-          </p> */}
-        </div>
+
+        <div className="flex flex-col items-end justify-end w-full mt-3 mb-8 text-base"></div>
+
         <div className="mb-8">
-          <img
-            src={AboutImage}
-            alt="About Us"
-            className="object-cover w-full h-[500px]"
-          />
+          <React.Suspense fallback={<Skeleton height={500} width="100%" />}>
+            <img
+              src="../../assets/img/about-img.webp"
+              alt="About Us"
+              className="object-cover w-full h-[500px]"
+            />
+          </React.Suspense>
         </div>
+
         <div className="text-[32px] text-center text-black md:text-[36px] lg:text-[44px] md:px-8">
           <p>A law firm built on trust, expertise, and results.</p>
         </div>
+
         <TimelineSection />
       </div>
     </section>

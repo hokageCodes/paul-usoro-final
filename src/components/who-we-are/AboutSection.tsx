@@ -3,70 +3,80 @@ import React from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 
 const AboutSection = () => {
-  // Track the scroll progress
   const { scrollYProgress } = useScroll();
 
-  // Adjust ranges for the About section animations
-  const scale = useTransform(scrollYProgress, [0, 0.3], [0.8, 1]); // Zoom in earlier
-  const opacity = useTransform(scrollYProgress, [0, 0.3], [0, 1]); // Fade in earlier
+  // Adjusting the scale and opacity effects
+  const scale = useTransform(scrollYProgress, [0.05, 0.3], [0.95, 1]);
+  const opacity = useTransform(scrollYProgress, [0.05, 0.3], [0, 1]);
 
   return (
-    <motion.div
-      className="relative bg-white py-16 px-5 lg:px-20 text-lg sm:text-lg"
+    <section
+      className="relative bg-white py-16 px-5 sm:px-10 lg:px-20 text-lg"
       id="about-us"
     >
       <div className="container mx-auto">
-        <div className="flex flex-col lg:flex-row items-center gap-12">
-          {/* Image Content */}
+        <div className="flex flex-col-reverse lg:flex-row items-center gap-12">
+          {/* Image Section */}
           <motion.div
             className="w-full lg:w-1/2"
-            style={{ scale, opacity }} // Apply scale and opacity based on scroll
+            initial={{ scale: 0.9, opacity: 0 }}
+            whileInView={{ scale: 1, opacity: 1 }}
+            viewport={{ once: true }} // Trigger ASAP
+            transition={{ duration: 0.8, ease: "easeOut" }}
           >
-            <motion.img
+            <img
               src="/assets/img/who-we-are.jpg"
-              alt="About Us"
-              className="rounded-lg shadow-2xl object-cover w-full h-[400px] transition-opacity"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.8 }}
+              alt="About Paul Usoro & Co"
+              className="rounded-lg shadow-xl object-cover w-full h-[300px] sm:h-[400px] lg:h-[500px] transition-all"
+              style={{ opacity: 0.95 }} // Less opaque for better clarity
+              loading="lazy"
             />
           </motion.div>
 
           {/* Text Content */}
-          <div className="w-full lg:w-1/2 text-textPrimary space-y-6 relative">
+          <div className="w-full lg:w-1/2 space-y-6">
             <motion.h2
-              className="text-4xl lg:text-5xl font-bold text-[#01553d]"
+              className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#01553d] relative"
               initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.01 }}
               transition={{ duration: 0.6 }}
             >
               Who We Are
-              <span className="absolute -left-5 -top-3 inline-block h-10 w-10 bg-orange-500 rounded-full opacity-70"></span>
+              <span className="absolute -left-5 -top-4 h-10 w-10 bg-orange-500 rounded-full opacity-80"></span>
             </motion.h2>
+
             <motion.p
-              className="text-xl leading-relaxed text-gray-600 lg:mt-6"
+              className="text-xl leading-relaxed text-gray-600 lg:mt-4"
               initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.01 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
             >
               Paul Usoro & Co. (PUC) is a leading full-service law firm,
-              providing top-notch legal services to both local and international
-              clients. We hold our clients in high esteem, providing them with
-              sound legal advice and innovative business solutions.
+              offering unparalleled legal services to both local and
+              international clients. Our goal is to provide clients with
+              practical business solutions and innovative legal strategies.
             </motion.p>
+
             <motion.div
+              className="mt-6"
               initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.01 }}
               transition={{ duration: 0.6, delay: 0.4 }}
             >
-              <a href="/expertise" className="px-6 py-3 text-xl text-[#01553d] border border-[#01553d] rounded-full hover:bg-[#01553d] hover:text-white transition-colors">
+              <a
+                href="/expertise"
+                className="px-6 py-3 text-xl text-[#01553d] border border-[#01553d] rounded-full hover:bg-[#01553d] hover:text-white transition-colors"
+              >
                 Our practice areas
               </a>
             </motion.div>
           </div>
         </div>
       </div>
-    </motion.div>
+    </section>
   );
 };
 

@@ -18,6 +18,12 @@ import LabourLawPage from './pages/expertise/Labour';
 import TransportLawPage from './pages/expertise/TransportLaw';
 import ProjectFinancePage from './pages/expertise/ProjectFinance';
 import MaritimePage from './pages/expertise/Maritime';
+import ContactForm from './pages/ContactPage';
+import CareersPage from './pages/CareersPage';
+import PeoplePage from './pages/PeoplesPage';
+import ProtectedRoute from '../ProtectedRoute';
+import AdminLayout from './components/layout/AdminLayout';
+import AdminDashboard from './components/admin/AdminDashboard';
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -46,8 +52,12 @@ const App = () => {
         <Router>
           <Navbar />
           <Routes>
+            {/* Public routes */}
             <Route path="/" element={<LandingPage />} />
             <Route path="/firm" element={<AboutPage />} />
+            <Route path="/contact" element={<ContactForm />} />
+            <Route path="/careers" element={<CareersPage />} />
+            <Route path="/people" element={<PeoplePage />} />
             <Route path="/expertise" element={<ExpertisePage />} />
             <Route path="/expertise/adr-and-advocacy" element={<AdrAdvocacyPage />} />
             <Route path="/expertise/banking-and-finance" element={<BankingFinancePage />} />
@@ -61,6 +71,17 @@ const App = () => {
             <Route path="/expertise/project-finance" element={<ProjectFinancePage />} />
             <Route path="/expertise/transportation-law" element={<TransportLawPage />} />
             <Route path="/expertise/aviation" element={<AviationPage />} />
+            <Route path="*" element={<LandingPage />} />
+
+            {/* Admin Routes (Protected) */}
+            <Route path="/admin" element={<ProtectedRoute redirectTo="/" />}>
+              <Route element={<AdminLayout />}>
+                <Route path="dashboard" element={<AdminDashboard />} />
+                {/* Add more admin routes here */}
+              </Route>
+            </Route>
+
+            {/* Fallback for undefined routes */}
             <Route path="*" element={<LandingPage />} />
           </Routes>
           <Footer />

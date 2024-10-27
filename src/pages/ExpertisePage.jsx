@@ -19,11 +19,11 @@ const ExpertiseSection = () => {
 
       <div className="flex flex-col items-center justify-center py-12 max-w-[9p00px]">
         <h1 className="text-4xl md:text-6xl font-bold text-center leading-snug">
-          Comprehensive <img src="/assets/img/yel.jpg" alt="icon" className="inline-block mx-2 w-20" /> 
+          Comprehensive <img src="/assets/img/yel.webp" alt="icon" className="inline-block mx-2 w-20" /> 
           legal support 
           <br />
           for national 
-          <img src="/assets/img/globe.jpg" alt="icon" className="inline-block mx-2 w-20" /> 
+          <img src="/assets/img/globe.webp" alt="icon" className="inline-block mx-2 w-20" /> 
           &  global businesses
         </h1>
       </div>

@@ -50,3 +50,19 @@ body {
     transform: rotate(360deg);
   }
 }
+
+.parallax-header {
+  background-image: url('../public/assets/img/inquiry.webp');
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
+}
+
+.parallax-break {
+  background-image: url('../public/assets/img/inquiry.webp');
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
+}
+
+
