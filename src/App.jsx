@@ -19,11 +19,13 @@ import ProjectFinancePage from './pages/expertise/ProjectFinance';
 import MaritimePage from './pages/expertise/Maritime';
 import ContactForm from './pages/ContactPage';
 import CareersPage from './pages/CareersPage';
-import PeoplePage from './pages/PeoplesPage';
+import PeoplePage from './pages/admin/PeoplePage';
 import ProtectedRoute from '../ProtectedRoute';
 import AdminLayout from './components/layout/AdminLayout';
 import AdminDashboard from './components/admin/AdminDashboard';
 import PublicLayout from './components/layout/PublicLayout';
+import PeopleUpload from './pages/admin/PeopleUpload';
+import PeoplesPage from './pages/PeoplesPage';
 
 // This component contains the routing logic
 const AppContent = () => {
@@ -35,7 +37,7 @@ const AppContent = () => {
         <Route path="/firm" element={<AboutPage />} />
         <Route path="/contact" element={<ContactForm />} />
         <Route path="/careers" element={<CareersPage />} />
-        <Route path="/people" element={<PeoplePage />} />
+        <Route path="/our-people" element={<PeoplesPage />} />
         <Route path="/expertise" element={<ExpertisePage />} />
         <Route path="/expertise/adr-and-advocacy" element={<AdrAdvocacyPage />} />
         <Route path="/expertise/banking-and-finance" element={<BankingFinancePage />} />
@@ -55,17 +57,16 @@ const AppContent = () => {
       {/* Admin Routes */}
       <Route path="/admin" element={<ProtectedRoute redirectTo="/admin-login" />}>
         <Route element={<AdminLayout />}>
-          <Route path="overview" element={<AdminDashboard />} />
-          {/* Add more admin routes here */}
+          <Route path="" element={<AdminDashboard />} />  {/* Default admin route */}
+          <Route path="people" element={<PeoplePage />} />  {/* People page route */}
+          <Route path="upload/people" element={<PeopleUpload />} />  {/* People page route */}
         </Route>
       </Route>
 
-      {/* Admin Login Route */}
       <Route path="/admin-login" element={<AdminLogin />} />
     </Routes>
   );
 };
-
 
 // Main App component
 const App = () => {
@@ -75,28 +76,20 @@ const App = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setProgress((prev) => Math.min(prev + 10, 100));
-      if (progress >= 100) {
+      if (progress === 100) {
         clearInterval(interval);
         setLoading(false);
       }
-    }, 300);
+    }, 500);
 
     return () => clearInterval(interval);
   }, [progress]);
 
   return (
-    <>
-      {loading ? (
-        <Loader percent={progress} />
-      ) : (
-        <Router>
-          <AppContent />
-        </Router>
-      )}
-    </>
+    <Router>
+      {loading ? <Loader progress={progress} /> : <AppContent />}
+    </Router>
   );
 };
 
 export default App;
-
-

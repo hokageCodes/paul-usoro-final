@@ -1,47 +1,11 @@
 /* eslint-disable no-unused-vars */
 import { useState, useEffect } from "react";
+import { db } from '../../firebase'; // Adjust the import based on your file structure
+import { collection, getDocs } from "firebase/firestore";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
-// Dummy Data for Staff Members
-const peopleData = [
-  {
-    name: "John Doe",
-    position: "Senior Partner",
-    practiceArea: "Banking and Finance, Corporate Law",
-    image: "/assets/img/john.jpg",
-    bioLink: "/staff/john-doe",
-  },
-  {
-    name: "Jane Smith",
-    position: "Managing Partner",
-    practiceArea: "Transportation Law, Maritime Law",
-    image: "/assets/img/jane.jpg",
-    bioLink: "/staff/jane-smith",
-  },
-  {
-    name: "Robert Johnson",
-    position: "Partner",
-    practiceArea: "ADR & Advocacy, Dispute Resolution",
-    image: "/assets/img/robert.jpg",
-    bioLink: "/staff/robert-johnson",
-  },
-  {
-    name: "Emily Brown",
-    position: "Managing Associate",
-    practiceArea: "Capital Market, Investments, Finance",
-    image: "/assets/img/emily.jpg",
-    bioLink: "/staff/emily-brown",
-  },
-  {
-    name: "Michael Green",
-    position: "Associate",
-    practiceArea: "Communications Law, Environmental Law",
-    image: "/assets/img/michael.jpg",
-    bioLink: "/staff/michael-green",
-  },
-];
-
+// Practice areas (as previously defined)
 const practiceAreas = [
   "ADR & Advocacy",
   "Transportation Law",
@@ -56,20 +20,30 @@ const PeoplePage = () => {
   const [search, setSearch] = useState("");
   const [positionFilter, setPositionFilter] = useState("");
   const [areaFilter, setAreaFilter] = useState("");
-  const [filteredPeople, setFilteredPeople] = useState([]);
+  const [people, setPeople] = useState([]);
 
-  // Simulate fetching data and loading state
+  // Fetching data from Firestore
   useEffect(() => {
-    setTimeout(() => {
-      setFilteredPeople(peopleData);
-      setIsLoading(false);
-    }, 1500);
+    const fetchData = async () => {
+      try {
+        const peopleCollection = collection(db, 'people');
+        const peopleSnapshot = await getDocs(peopleCollection);
+        const peopleList = peopleSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        setPeople(peopleList);
+      } catch (error) {
+        console.error("Error fetching people data:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
   }, []);
 
   // Filter logic
   const filterPeople = () => {
-    return peopleData.filter((person) => {
-      const matchesSearch = person.name
+    return people.filter((person) => {
+      const matchesSearch = person.fullName
         .toLowerCase()
         .includes(search.toLowerCase());
       const matchesPosition = positionFilter
@@ -149,24 +123,24 @@ const PeoplePage = () => {
                 ))
             : filterPeople().map((person) => (
                 <a
-                  href={person.bioLink}
-                  key={person.name}
+                  href={`/staff/${person.fullName.replace(/\s+/g, '-').toLowerCase()}`} // Dynamic bio link
+                  key={person.id}
                   className="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300"
                 >
                   <img
-                    src={person.image}
-                    alt={person.name}
+                    src={person.photoURL} // Adjusted to match the Firebase field
+                    alt={person.fullName}
                     className="w-full h-56 object-cover rounded-t-lg"
                   />
                   <div className="mt-4">
                     <h3 className="text-2xl font-semibold text-[#3F2E3E]">
-                      {person.name}
+                      {person.fullName}
                     </h3>
                     <p className="text-md text-gray-600 mt-1">
                       {person.position}
                     </p>
                     <p className="text-sm text-[#7F5283] mt-1">
-                      {person.practiceArea}
+                      {person.practiceArea.join(", ")} {/* Join multiple areas */}
                     </p>
                     <span className="mt-4 block text-[#01553d] underline">
                       View Profile
