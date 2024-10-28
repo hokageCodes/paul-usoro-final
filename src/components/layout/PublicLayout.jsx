@@ -1,13 +1,17 @@
-/* eslint-disable react/prop-types */
-import { Navbar } from './components/navbar/Navbar';
-import Footer from './components/footer/Footer';
+import Footer from "../footer/Footer";
+import { Navbar } from "../navbar/Navbar";
+import { Outlet } from 'react-router-dom';
 
-const PublicLayout = ({ children }) => (
-  <>
-    <Navbar />
-    <main>{children}</main>
-    <Footer />
-  </>
-);
+const PublicLayout = () => {
+  return (
+    <>
+      <Navbar />
+      <main>
+        <Outlet /> 
+      </main>
+      <Footer />
+    </>
+  );
+};
 
 export default PublicLayout;
