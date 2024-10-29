@@ -1,6 +1,8 @@
+/* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../firebase";
+import ContactModal from "../components/ContactModal";
 
 const ParallaxSection = ({ title, imageUrl }) => (
   <section
