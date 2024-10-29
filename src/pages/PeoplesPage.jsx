@@ -5,7 +5,6 @@ import { collection, getDocs, query, orderBy } from "firebase/firestore";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
-// Practice areas (as previously defined)
 const practiceAreas = [
   "ADR & Advocacy",
   "Transportation Law",
