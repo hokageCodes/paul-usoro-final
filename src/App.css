@@ -26,3 +26,7 @@
   height: 0%;
   width: 100%;
 }
+
+.bg-body-img {
+  background-image: url('/public/assets/img/hero-puc.jpg'); /* Update the path accordingly */
+}

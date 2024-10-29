@@ -93,7 +93,7 @@ const HeroSection = () => {
           <div className="relative h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px]">
             {!imageLoaded && <Skeleton height="100%" />}
             <img
-              src="/assets/img/who-we-are.jpg"
+              src="/assets/img/who-we-are.webp"
               alt="Leadership Coaching"
               className="rounded-lg shadow-lg object-cover w-full h-full transition-opacity duration-500"
               onLoad={() => setImageLoaded(true)}

@@ -22,20 +22,21 @@ export const Navbar = () => {
   };
 
   useEffect(() => {
+    // Set the initial active link based on the current pathname
+    const currentPath = window.location.pathname.replace('/', '');
+    setActiveLink(currentPath || ''); // Default to '' for Home
+
     if (isOpen) {
       const firstLink = menuRef.current.querySelector('a');
       firstLink && firstLink.focus();
-      // Prevent scrolling on body
       document.body.style.overflow = 'hidden';
     } else {
-      // Allow scrolling again
       document.body.style.overflow = 'unset';
     }
 
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
-      // Clean up the overflow style
       document.body.style.overflow = 'unset';
     };
   }, [isOpen]);
@@ -44,9 +45,9 @@ export const Navbar = () => {
     <header className="sticky top-0 backdrop-blur-sm z-30 h-[10vh] flex items-center justify-between px-4 pt-2 md:px-8 mb-2">
       <a href="/" className="flex justify-center">
         <img
-          src="/assets/img/puc-logo.png"
+          src="/assets/img/puc-logo.webp"
           className="mr-3"
-          alt="codewithfaraz Logo"
+          alt="puc-logo"
           width={100}
           height={100}
         />
@@ -66,19 +67,23 @@ export const Navbar = () => {
       >
         <div className="flex flex-col md:flex-row md:gap-6 md:items-center p-8 md:p-0">
           {[
+            { name: 'Home', path: '' },
             { name: 'Firm', path: 'firm' },
             { name: 'Expertise', path: 'expertise' },
-            { name: 'People', path: 'people' }, // Updated "People" link
+            { name: 'People', path: 'people' },
             { name: 'Careers', path: 'careers' },
             { name: 'Contact', path: 'contact' }
           ].map(({ name, path }) => (
             <a 
               key={path}
               href={`/${path}`}
-              className={`py-2 text-2xl font-bold ${activeLink === path ? 'text-blue-500' : 'text-[#01553d]'}`} 
+              className={`py-2 text-2xl font-bold relative ${activeLink === path ? 'text-[#01553d]' : 'text-[#01553d]'}`} 
               onClick={() => handleLinkClick(path)}
             >
               {name}
+              {activeLink === path && (
+                <span className="absolute left-0 bottom-0 w-full h-[2px] bg-[#01553d]"></span>
+              )}
             </a>
           ))}
         </div>

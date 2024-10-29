@@ -1,17 +1,24 @@
-import { Suspense } from 'react';
+import { Suspense, useEffect } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import ExpertiseCards from '../components/expertise/ExpertiseCards';
 
 const ExpertiseSection = () => {
+  // AOS library initialization on client-side
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      import('aos').then((AOS) => AOS.init());
+    }
+  }, []);
+
   return (
     <section className="min-h-screen scroll-smooth">
       {/* Banner Section */}
-      <div className="relative h-72 sm:h-96">
-        <Suspense fallback={<Skeleton height="100%" width="100%" />}>
+      <header className="relative h-72 sm:h-96">
+        <Suspense fallback={<Skeleton height="100%" width="100%" aria-busy="true" />}>
           <img
             src="/assets/img/expertise-banner.png"
-            alt="Expertise Banner"
+            alt="Banner depicting legal expertise areas"
             className="absolute inset-0 h-full w-full object-cover"
             loading="lazy"
           />
@@ -25,37 +32,37 @@ const ExpertiseSection = () => {
             OUR EXPERTISE
           </h1>
         </div>
-      </div>
+      </header>
 
       {/* Title Section */}
       <div className="flex flex-col items-center justify-center py-12 max-w-[900px] mx-auto px-4">
-        <h1 className="text-4xl md:text-6xl font-bold text-center leading-snug">
+        <h2 className="text-4xl md:text-6xl font-bold text-center leading-snug">
           Comprehensive{' '}
-          <Suspense fallback={<Skeleton width={80} height={40} />}>
+          <Suspense fallback={<Skeleton width={80} height={40} aria-busy="true" />}>
             <img
               src="/assets/img/yel.webp"
-              alt="icon"
+              alt="Yellow icon representing service quality"
               className="inline-block mx-2 w-20"
               loading="lazy"
             />
           </Suspense>
           legal support <br />
           for national{' '}
-          <Suspense fallback={<Skeleton width={80} height={40} />}>
+          <Suspense fallback={<Skeleton width={80} height={40} aria-busy="true" />}>
             <img
               src="/assets/img/globe.webp"
-              alt="icon"
+              alt="Globe icon representing global reach"
               className="inline-block mx-2 w-20"
               loading="lazy"
             />
           </Suspense>
           & global businesses
-        </h1>
+        </h2>
       </div>
 
       {/* Expertise Cards Section with Skeleton Placeholder */}
       <div className="py-8">
-        <Suspense fallback={<Skeleton count={3} height={300} className="my-4" />}>
+        <Suspense fallback={<Skeleton count={3} height={300} className="my-4" aria-busy="true" />}>
           <ExpertiseCards />
         </Suspense>
       </div>

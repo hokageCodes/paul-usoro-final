@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { useState, useEffect } from "react";
-import { db } from "../../firebase"; // Adjust the import based on your file structure
+import { db } from "../../firebase"; // Ensure correct Firebase config for Vite
 import { collection, getDocs, query, orderBy } from "firebase/firestore";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
@@ -21,13 +21,12 @@ const PeoplePage = () => {
   const [areaFilter, setAreaFilter] = useState("");
   const [people, setPeople] = useState([]);
 
-  // Fetching data from Firestore, ordered by upload time (oldest first)
   useEffect(() => {
     const fetchData = async () => {
       try {
         const peopleCollection = collection(db, "people");
         const peopleSnapshot = await getDocs(
-          query(peopleCollection, orderBy("createdAt", "asc")) // Order by createdAt field in ascending order
+          query(peopleCollection, orderBy("createdAt", "asc"))
         );
         const peopleList = peopleSnapshot.docs.map((doc) => ({
           id: doc.id,
@@ -44,7 +43,7 @@ const PeoplePage = () => {
     fetchData();
   }, []);
 
-  // Filter logic
+  // Filtering logic
   const filterPeople = () => {
     return people.filter((person) => {
       const matchesSearch = person.fullName
@@ -110,7 +109,7 @@ const PeoplePage = () => {
         {/* People Cards or Skeleton Loaders */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {isLoading
-            ? Array(8) // Render skeletons while loading
+            ? Array(8)
                 .fill(0)
                 .map((_, index) => (
                   <div
@@ -127,7 +126,9 @@ const PeoplePage = () => {
                 ))
             : filterPeople().map((person) => (
                 <a
-                  href={`/staff/${person.fullName.replace(/\s+/g, '-').toLowerCase()}`} // Dynamic bio link
+                  href={`/staff/${person.fullName
+                    .replace(/\s+/g, '-')
+                    .toLowerCase()}`}
                   key={person.id}
                   className="bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300"
                 >
@@ -135,6 +136,7 @@ const PeoplePage = () => {
                     src={person.photoURL}
                     alt={person.fullName}
                     className="w-84 h-84 object-cover rounded-t-lg"
+                    loading="lazy"
                   />
                   <div className="mt-4 p-2 pl-4">
                     <h3 className="text-3xl font-bold text-[#01553d]">
@@ -144,7 +146,7 @@ const PeoplePage = () => {
                       {person.position}
                     </p>
                     <p className="text-sm text-[#01553d] mt-1">
-                      {person.practiceArea.join(", ")} {/* Join multiple areas */}
+                      {person.practiceArea.join(", ")}
                     </p>
                     <span className="mt-4 block text-[#01553d] underline">
                       View Profile
@@ -152,7 +154,6 @@ const PeoplePage = () => {
                   </div>
                 </a>
               ))}
-
         </div>
 
         {/* No Results Message */}

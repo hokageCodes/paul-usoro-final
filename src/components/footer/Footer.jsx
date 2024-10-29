@@ -7,18 +7,18 @@ export default function Footer() {
           <div className="py-16 flex justify-between items-center flex-col gap-8 lg:flex-row">
             <a href="/" className="flex justify-center">
               <img
-                src="/assets/img/puc-logo.png"
+                src="/assets/img/puc-logo.webp"
                 className="mr-3"
-                alt="codewithfaraz Logo"
+                alt="Puc Logo"
                 width={100}
                 height={100}
               />
             </a>
             <ul className="text-lg text-center sm:flex items-center justify-center gap-14 lg:gap-10 xl:gap-14 transition-all duration-500">
-              <li><a href="javascript:;" className="text-white hover:text-gray-400">About</a></li>
+              <li><a href="/firm" className="text-white hover:text-gray-400">About</a></li>
               <li className="sm:my-0 my-2"><a href="/expertise" className="text-white hover:text-gray-400">Practice Areas</a></li>
-              <li><a href="javascript:;" className="text-white hover:text-gray-400">People</a></li>
-              <li className="sm:my-0 my-2"><a href="javascript:;" className="text-white hover:text-gray-400">Careers</a></li>
+              <li><a href="/people" className="text-white hover:text-gray-400">People</a></li>
+              <li className="sm:my-0 my-2"><a href="/careers" className="text-white hover:text-gray-400">Careers</a></li>
               <li><a href="/contact" className="text-white hover:text-gray-400">Contact</a></li>
             </ul>
             <div className="flex space-x-4 sm:justify-center">

@@ -81,12 +81,12 @@ const CareersPage = () => {
             Whether you are a fresher or an experienced professional, explore PUC for
             opportunities to grow, learn, and lead.
           </p>
-          <button
+          {/* <button
             className="mt-6 bg-[#fff] border text-[#01553d] font-semibold py-4 px-4 
               hover:bg-transparent hover:text-white transition duration-300"
           >
             Ask us any Questions
-          </button>
+          </button> */}
         </section>
       </div>
     </div>

@@ -31,7 +31,8 @@ const ContactPage = () => {
           </p>
           <a
             href="/careers"
-            className="px-6 py-3 bg-[#01553d] text-white transition duration-300"
+            className="px-6 py-3 bg-[#01553d] text-white transition duration-300 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-[#01553d] rounded"
+            aria-label="Explore Careers"
           >
             Explore Careers
           </a>
@@ -50,7 +51,8 @@ const ContactPage = () => {
           </p>
           <button
             onClick={openModal}
-            className="px-6 py-3 bg-[#01553d] text-white transition duration-300"
+            className="px-6 py-3 bg-[#01553d] text-white transition duration-300 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-[#01553d] rounded"
+            aria-label="Contact Us"
           >
             Contact Us
           </button>
@@ -64,10 +66,10 @@ const ContactPage = () => {
 
 const ParallaxSection = ({ title, imageUrl }) => (
   <section
-    className="bg-cover bg-center bg-fixed h-[50vh] flex justify-center items-center"
+    className="bg-cover bg-center bg-fixed h-[50vh] md:h-[35vh] lg:h-[50vh] flex justify-center items-center"
     style={{ backgroundImage: `url(${imageUrl})` }}
   >
-    {title && <h2 className="text-4xl font-bold">{title}</h2>}
+    {title && <h2 className="text-4xl font-bold text-white">{title}</h2>}
   </section>  
 );
 
