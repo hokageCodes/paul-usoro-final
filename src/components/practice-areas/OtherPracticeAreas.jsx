@@ -4,18 +4,18 @@ import { useState, useEffect } from 'react';
 import { FiArrowRight } from 'react-icons/fi';
 
 const practiceAreas = [
-  { title: "Adr & Advocacy", image: "/assets/img/adr.jpg", link: "/expertise/adr-and-advocacy" },
-  { title: "Transportation Law", image: "/assets/img/road.jpg", link: "/expertise/transportation-law" },
-  { title: "Banking and Finance", image: "/assets/img/banking.jpg", link: "/expertise/banking-and-finance" },
-  { title: "Capital Market", image: "/assets/img/capital.jpg", link: "/expertise/capital-market-law" },
-  { title: "Communications Law", image: "/assets/img/comms.jpg", link: "/expertise/communication-law" },
-  { title: "Energy and Environmental Law", image: "/assets/img/energy.jpg", link: "/expertise/energy-and-environmental-law" },
-  { title: "General Practice", image: "/assets/img/energy.jpg", link: "/expertise/general-commercial-practice" },
-  { title: "Labour", image: "/assets/img/energy.jpg", link: "/expertise/labour-and-industrial-relations" },
-  { title: "Maritime", image: "/assets/img/energy.jpg", link: "/expertise/maritime" },
-  { title: "Mergers and Acquisitions", image: "/assets/img/energy.jpg", link: "/expertise/corporate-restructuring,-mergers-and-acquisitions  " },
-  { title: "Aviation", image: "/assets/img/energy.jpg", link: "/expertise/aviation" },
-  { title: "Project Finance", image: "/assets/img/energy.jpg", link: "/expertise/project-finance" },
+  { title: "Adr & Advocacy", image: "/assets/img/adr.webp", link: "/expertise/adr-and-advocacy" },
+  { title: "Transportation Law", image: "/assets/img/road.webp", link: "/expertise/transportation-law" },
+  { title: "Banking and Finance", image: "/assets/img/banking.webp", link: "/expertise/banking-and-finance" },
+  { title: "Capital Market", image: "/assets/img/capital.webp", link: "/expertise/capital-market-law" },
+  { title: "Communications Law", image: "/assets/img/comms.webp", link: "/expertise/communication-law" },
+  { title: "Energy and Environmental Law", image: "/assets/img/energy.webp", link: "/expertise/energy-and-environmental-law" },
+  { title: "General Practice", image: "/assets/img/gen.jpg", link: "/expertise/general-commercial-practice" },
+  { title: "Labour", image: "/assets/img/labour.jpg", link: "/expertise/labour-and-industrial-relations" },
+  { title: "Maritime", image: "/assets/img/maritime.jpg", link: "/expertise/maritime" },
+  { title: "Mergers and Acquisitions", image: "/assets/img/mergers.webp", link: "/expertise/corporate-restructuring,-mergers-and-acquisitions  " },
+  { title: "Aviation", image: "/assets/img/aviation.jpg", link: "/expertise/aviation" },
+  { title: "Project Finance", image: "/assets/img/pro-finance.jpg", link: "/expertise/project-finance" },
 ];
 
 export default function OtherPracticeAreas({ currentTitle }) {

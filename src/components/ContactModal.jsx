@@ -1,6 +1,8 @@
 /* eslint-disable react/prop-types */
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { db } from '../../firebase'; // Adjust the import based on your file structure
+import { collection, addDoc, serverTimestamp  } from 'firebase/firestore';
 
 const questions = [
   { id: 1, label: "What's your name?", field: 'name' },
@@ -11,13 +13,13 @@ const questions = [
 const ContactModal = ({ closeModal }) => {
   const [step, setStep] = useState(0);
   const [formData, setFormData] = useState({ name: '', concern: '', email: '' });
+  const [loading, setLoading] = useState(false);
   const modalRef = useRef(null);
 
   // Handle "Escape" key to close modal
   useEffect(() => {
     const handleEscape = (e) => {
       if (e.key === 'Escape') {
-        console.log("Escape key pressed, closing modal...");
         closeModal();
       }
     };
@@ -34,15 +36,24 @@ const ContactModal = ({ closeModal }) => {
     if (step < questions.length - 1) setStep(step + 1);
   };
 
-  const handleSubmit = () => {
-    alert(JSON.stringify(formData, null, 2));
-    closeModal();
+  const handleSubmit = async () => {
+    setLoading(true);
+    try {
+      await addDoc(collection(db, 'contact'), {
+        ...formData,
+        createdAt: serverTimestamp(), // Add the timestamp here
+      });
+      alert('Your message has been submitted successfully!');
+      closeModal();
+    } catch (error) {
+      console.error('Error submitting form data:', error);
+      alert('There was an error submitting your form. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
-
   const handleBackdropClick = (e) => {
-    // Close modal if the backdrop is clicked and it's not inside the modal
     if (modalRef.current && !modalRef.current.contains(e.target)) {
-      console.log("Backdrop clicked, closing modal...");
       closeModal();
     }
   };
@@ -85,10 +96,11 @@ const ContactModal = ({ closeModal }) => {
                 className="w-full p-2 border rounded mb-4"
               />
               <button
-                onClick={handleNextStep}
-                className="bg-[#01553d] text-white text-xl px-8 py-2"
+                onClick={step < questions.length - 1 ? handleNextStep : handleSubmit}
+                className={`bg-[#01553d] text-white text-xl px-8 py-2 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                disabled={loading}
               >
-                {step < questions.length - 1 ? 'Next' : 'Submit'}
+                {loading ? 'Submitting...' : step < questions.length - 1 ? 'Next' : 'Submit'}
               </button>
             </motion.div>
           ) : (
@@ -97,7 +109,7 @@ const ContactModal = ({ closeModal }) => {
                 Thank you, {formData.name}. We will be in touch soon.
               </p>
               <button
-                onClick={handleSubmit}
+                onClick={closeModal}
                 className="bg-green-600 text-white px-4 py-2 rounded"
               >
                 Close

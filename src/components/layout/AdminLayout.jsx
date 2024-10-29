@@ -3,15 +3,25 @@
 import { useState } from 'react';
 import { 
   FaHome, FaUser, FaBriefcase, FaChartBar, 
-  FaEnvelope, FaBars, FaChevronDown, FaSignOutAlt 
+  FaEnvelope, FaBars, FaSignOutAlt 
 } from 'react-icons/fa';
-import { Outlet, Link } from 'react-router-dom';
+import { Outlet, Link, useNavigate } from 'react-router-dom'; // Import useNavigate
+import { auth, signOut } from '../../../firebase'; // Import signOut
 
 const AdminLayout = ({ children }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const navigate = useNavigate(); // Initialize navigate for redirection
 
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth); // Sign out user
+      navigate('/admin-login'); // Redirect to login page after logout
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
+  };
 
   const getTimeOfDay = () => {
     const hours = new Date().getHours();
@@ -41,7 +51,6 @@ const AdminLayout = ({ children }) => {
               </Link>
               <div className="h-1 w-0 bg-white group-hover:w-full transition-all duration-300"></div>
             </li>
-
             <li className="group">
               <Link to="/admin/people" className="flex items-center space-x-2 p-2">
                 <FaUser />
@@ -49,45 +58,28 @@ const AdminLayout = ({ children }) => {
               </Link>
               <div className="h-1 w-0 bg-white group-hover:w-full transition-all duration-300"></div>
             </li>
-
             <li className="group">
-              <Link to="#" className="flex items-center space-x-2 p-2">
+              <Link to="/admin/careers" className="flex items-center space-x-2 p-2">
                 <FaBriefcase />
                 {isSidebarOpen && <span>Careers</span>}
               </Link>
               <div className="h-1 w-0 bg-white group-hover:w-full transition-all duration-300"></div>
             </li>
-
-            <li className="relative group">
-              <div
-                className="flex items-center space-x-2 p-2 cursor-pointer"
-                onClick={() => setDropdownOpen(!dropdownOpen)}
-              >
-                <FaBars />
-                {isSidebarOpen && <span>Uploads</span>}
-                {isSidebarOpen && <FaChevronDown />}
-              </div>
-              {dropdownOpen && (
-                <ul className="ml-8 mt-2 space-y-2">
-                  <li className="hover:underline">
-                    <Link to="/admin/upload/people">People Uploads</Link>
-                  </li>
-                  <li className="hover:underline">
-                    <Link to="#">Careers Upload</Link>
-                  </li>
-                </ul>
-              )}
-            </li>
-
             <li className="group">
-              <Link to="#" className="flex items-center space-x-2 p-2">
+              <Link to="/admin/upload/people" className="flex items-center space-x-2 p-2">
+                <FaBriefcase />
+                {isSidebarOpen && <span>People Upload</span>}
+              </Link>
+              <div className="h-1 w-0 bg-white group-hover:w-full transition-all duration-300"></div>
+            </li>
+            <li className="group">
+              <Link to="/admin/upload/jobs" className="flex items-center space-x-2 p-2">
                 <FaChartBar />
-                {isSidebarOpen && <span>Analytics</span>}
+                {isSidebarOpen && <span>Job Openings</span>}
               </Link>
             </li>
-
             <li className="group">
-              <Link to="#" className="flex items-center space-x-2 p-2">
+              <Link to="/admin/messages" className="flex items-center space-x-2 p-2">
                 <FaEnvelope />
                 {isSidebarOpen && <span>Messages</span>}
               </Link>
@@ -96,7 +88,10 @@ const AdminLayout = ({ children }) => {
         </nav>
 
         <div className="absolute bottom-0 p-4 w-full">
-          <button className="flex items-center space-x-2 text-red-500 hover:underline w-full p-2 text-xl">
+          <button 
+            className="flex items-center space-x-2 text-red-500 hover:underline w-full p-2 text-xl"
+            onClick={handleLogout} // Attach logout function
+          >
             <FaSignOutAlt />
             {isSidebarOpen && <span>Logout</span>}
           </button>
@@ -106,8 +101,8 @@ const AdminLayout = ({ children }) => {
       {/* Main Content */}
       <div className="flex-1 flex flex-col">
         <header
-          className={`bg-white shadow p-4 flex items-center ${
-            isSidebarOpen ? 'pl-64' : 'pl-16'
+          className={`bg-white shadow p-4 flex justify-between items-center ${
+            isSidebarOpen ? 'pl-4' : 'pl-16'
           } transition-all duration-300`}
         >
           <button className="md:hidden" onClick={toggleSidebar}>
@@ -115,12 +110,12 @@ const AdminLayout = ({ children }) => {
           </button>
           <h1 className="text-xl font-semibold">{getTimeOfDay()}, Admin!</h1>
           <div className="flex items-center space-x-2">
-            <span className="hidden md:block">admin@example.com</span>
             <img
-              src="path_to_profile_image"
+              src="/assets/img/puc-logo.png"
               alt="Profile"
-              className="w-10 h-10 rounded-full"
+              className="w-10 h-10 rounded-full object-contain"
             />
+            <span className="hidden md:block">admin@example.com</span>
           </div>
         </header>
 

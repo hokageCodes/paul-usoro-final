@@ -21,7 +21,7 @@ const locations = {
       name: 'Uyo, Nigeria',
       address: '1st Floor, Left Wing, APICO House, Abak Road, P. O. Box 2212, Uyo, Akwa Ibom State, Nigeria.',
       phone: '+234 85 203690',
-      imageUrl: '/assets/img/Lagos.webp',
+      imageUrl: '/assets/img/uyo.jpg',
     },
   ],
 };
@@ -34,7 +34,7 @@ const LocationCard = ({ name, address, phone, imageUrl, isLoading }) => (
       <img 
         src={imageUrl} 
         alt={`Location at ${name}`} 
-        className="object-cover h-48 w-full" 
+        className="object-cover h-72 w-full" 
       />
     )}
 

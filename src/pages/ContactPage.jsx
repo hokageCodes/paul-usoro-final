@@ -56,11 +56,6 @@ const ContactPage = () => {
           </button>
         </div>
       </TextSection>
-{/* 
-      <ParallaxSection
-        title="Galaxy"
-        imageUrl="https://images.unsplash.com/photo-1543722530-d2c3201371e7?crop=entropy&cs=tinysrgb&fm=jpg&ixid=MnwzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE2NjIzOTExOTg&ixlib=rb-1.2.1&q=80"
-      /> */}
 
       {isModalOpen && <ContactModal closeModal={closeModal} />}
     </main>
@@ -73,7 +68,7 @@ const ParallaxSection = ({ title, imageUrl }) => (
     style={{ backgroundImage: `url(${imageUrl})` }}
   >
     {title && <h2 className="text-4xl font-bold">{title}</h2>}
-  </section>
+  </section>  
 );
 
 const TextSection = ({ children }) => (

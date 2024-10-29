@@ -32,7 +32,7 @@ const AdminLoginForm = () => {
       // Check if the user is admin
       const adminDoc = await getDoc(doc(db, "admin", user.uid)); // Use db to get the admin document
       if (adminDoc.exists() && adminDoc.data().isAdmin) {
-        navigate('/admin/overview');
+        navigate('/admin');
       } else {
         toast.error('Not authorized as admin');
       }

@@ -26,6 +26,10 @@ import AdminDashboard from './components/admin/AdminDashboard';
 import PublicLayout from './components/layout/PublicLayout';
 import PeopleUpload from './pages/admin/PeopleUpload';
 import PeoplesPage from './pages/PeoplesPage';
+import MessagesPage from './pages/admin/MessagesPage';
+import JobPage from './pages/JobPage';
+import JobPostingForm from './pages/admin/JobUpload';
+import JobOpeningsPage from './pages/admin/CareersPage';
 
 // This component contains the routing logic
 const AppContent = () => {
@@ -37,7 +41,8 @@ const AppContent = () => {
         <Route path="/firm" element={<AboutPage />} />
         <Route path="/contact" element={<ContactForm />} />
         <Route path="/careers" element={<CareersPage />} />
-        <Route path="/our-people" element={<PeoplesPage />} />
+        <Route path="/people" element={<PeoplesPage />} />
+        <Route path="/job-opening" element={<JobPage />} />
         <Route path="/expertise" element={<ExpertisePage />} />
         <Route path="/expertise/adr-and-advocacy" element={<AdrAdvocacyPage />} />
         <Route path="/expertise/banking-and-finance" element={<BankingFinancePage />} />
@@ -60,6 +65,9 @@ const AppContent = () => {
           <Route path="" element={<AdminDashboard />} />  {/* Default admin route */}
           <Route path="people" element={<PeoplePage />} />  {/* People page route */}
           <Route path="upload/people" element={<PeopleUpload />} />  {/* People page route */}
+          <Route path="upload/jobs" element={<JobPostingForm />} />  {/* People page route */}
+          <Route path="messages" element={<MessagesPage />} />  {/* People page route */}
+          <Route path="careers" element={<JobOpeningsPage />} />  {/* People page route */}
         </Route>
       </Route>
 
@@ -80,7 +88,7 @@ const App = () => {
         clearInterval(interval);
         setLoading(false);
       }
-    }, 500);
+    }, 100);
 
     return () => clearInterval(interval);
   }, [progress]);

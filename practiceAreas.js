@@ -40,19 +40,19 @@ const practiceAreas = [
         experience: ["Experience paragraph 1", "Experience paragraph 2", "Experience paragraph 3", "Experience paragraph 4"]
     },
     {
-        imageSrc: '/assets/img/corporate.webp',
+        imageSrc: '/assets/img/mergers.webp',
         title: 'Corporate Restructuring, Mergers and Acquisitions',
         intro: ["Intro paragraph 1", "Intro paragraph 2"],
         experience: ["Experience paragraph 1", "Experience paragraph 2", "Experience paragraph 3", "Experience paragraph 4"]
     },
     {
-        imageSrc: '/assets/img/labour.webp',
+        imageSrc: '/assets/img/labour.jpg',
         title: 'Labour and Industrial Relations',
         intro: ["Intro paragraph 1", "Intro paragraph 2"],
         experience: ["Experience paragraph 1", "Experience paragraph 2", "Experience paragraph 3", "Experience paragraph 4"]
     },
     {
-        imageSrc: '/assets/img/project-finance.webp',
+        imageSrc: '/assets/img/pro-finance.jpg',
         title: 'Project Finance',
         intro: ["Intro paragraph 1", "Intro paragraph 2"],
         experience: ["Experience paragraph 1", "Experience paragraph 2", "Experience paragraph 3", "Experience paragraph 4"]
@@ -64,13 +64,13 @@ const practiceAreas = [
         experience: ["Experience paragraph 1", "Experience paragraph 2", "Experience paragraph 3", "Experience paragraph 4"]
     },
     {
-        imageSrc: '/assets/img/aviation.webp',
+        imageSrc: '/assets/img/aviation.jpg',
         title: 'Aviation',
         intro: ["Intro paragraph 1", "Intro paragraph 2"],
         experience: ["Experience paragraph 1", "Experience paragraph 2", "Experience paragraph 3", "Experience paragraph 4"]
     },
     {
-        imageSrc: '/assets/img/commercial.webp',
+        imageSrc: '/assets/img/gen.jpg',
         title: 'General Commercial Practice',
         intro: ["Intro paragraph 1", "Intro paragraph 2"],
         experience: ["Experience paragraph 1", "Experience paragraph 2", "Experience paragraph 3", "Experience paragraph 4"]

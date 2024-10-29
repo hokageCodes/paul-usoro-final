@@ -21,6 +21,7 @@ const practiceAreas = [
 const positions = [
   "Senior Partner",
   "Managing Partner",
+  "Partner",
   "Managing Associate",
   "Associate",
 ];
@@ -63,19 +64,19 @@ export default function PeopleUpload() {
     setLoading(true);
     setFeedbackMessage('');
     setError('');
-
+  
     try {
       const { fullName, position, practiceArea, photo } = formData;
-
+  
       // Validation checks
       if (!fullName || !position || practiceArea.length === 0 || !photo) {
         throw new Error('All fields are required.');
       }
-
+  
       const photoRef = ref(storage, `people/${photo.name}`);
       await uploadBytes(photoRef, photo);
       const photoURL = await getDownloadURL(photoRef);
-
+  
       const peopleCollection = collection(db, 'people');
       await addDoc(peopleCollection, {
         fullName,
@@ -84,7 +85,14 @@ export default function PeopleUpload() {
         photoURL,
         createdAt: new Date(),
       });
-
+  
+      // Add a new update to the updates collection
+      const updatesCollection = collection(db, 'updates');
+      await addDoc(updatesCollection, {
+        message: `${fullName} has been added as a ${position}.`,
+        timestamp: new Date(),
+      });
+  
       setFeedbackMessage('Staff uploaded successfully!');
       setFormData({ fullName: '', position: '', practiceArea: [], photo: null });
     } catch (error) {
@@ -96,7 +104,7 @@ export default function PeopleUpload() {
   };
 
   return (
-    <div className="max-w-md mx-auto bg-white shadow-lg rounded-lg p-6">
+    <div className="max-w-3xl mx-auto bg-white shadow-lg rounded-lg p-6">
       <h2 className="text-2xl font-bold mb-4">Upload Staff Information</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">

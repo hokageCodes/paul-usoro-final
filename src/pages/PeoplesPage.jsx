@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { useState, useEffect } from "react";
-import { db } from '../../firebase'; // Adjust the import based on your file structure
-import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../firebase"; // Adjust the import based on your file structure
+import { collection, getDocs, query, orderBy } from "firebase/firestore";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
@@ -22,13 +22,18 @@ const PeoplePage = () => {
   const [areaFilter, setAreaFilter] = useState("");
   const [people, setPeople] = useState([]);
 
-  // Fetching data from Firestore
+  // Fetching data from Firestore, ordered by upload time (oldest first)
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const peopleCollection = collection(db, 'people');
-        const peopleSnapshot = await getDocs(peopleCollection);
-        const peopleList = peopleSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        const peopleCollection = collection(db, "people");
+        const peopleSnapshot = await getDocs(
+          query(peopleCollection, orderBy("createdAt", "asc")) // Order by createdAt field in ascending order
+        );
+        const peopleList = peopleSnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
         setPeople(peopleList);
       } catch (error) {
         console.error("Error fetching people data:", error);
@@ -125,21 +130,21 @@ const PeoplePage = () => {
                 <a
                   href={`/staff/${person.fullName.replace(/\s+/g, '-').toLowerCase()}`} // Dynamic bio link
                   key={person.id}
-                  className="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300"
+                  className="bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300"
                 >
                   <img
-                    src={person.photoURL} // Adjusted to match the Firebase field
+                    src={person.photoURL}
                     alt={person.fullName}
-                    className="w-full h-56 object-cover rounded-t-lg"
+                    className="w-84 h-84 object-cover rounded-t-lg"
                   />
-                  <div className="mt-4">
-                    <h3 className="text-2xl font-semibold text-[#3F2E3E]">
+                  <div className="mt-4 p-2 pl-4">
+                    <h3 className="text-3xl font-bold text-[#01553d]">
                       {person.fullName}
                     </h3>
-                    <p className="text-md text-gray-600 mt-1">
+                    <p className="text-lg text-gray-600 mt-1">
                       {person.position}
                     </p>
-                    <p className="text-sm text-[#7F5283] mt-1">
+                    <p className="text-sm text-[#01553d] mt-1">
                       {person.practiceArea.join(", ")} {/* Join multiple areas */}
                     </p>
                     <span className="mt-4 block text-[#01553d] underline">
@@ -148,6 +153,7 @@ const PeoplePage = () => {
                   </div>
                 </a>
               ))}
+
         </div>
 
         {/* No Results Message */}

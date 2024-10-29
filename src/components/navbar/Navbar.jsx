@@ -65,19 +65,22 @@ export const Navbar = () => {
         className={`fixed top-[75px] left-0 h-screen w-full bg-white transition-transform duration-300 ease-in-out transform ${isOpen ? 'translate-x-0' : '-translate-x-full'} md:relative md:flex md:translate-x-0 md:h-auto md:w-auto md:bg-transparent md:top-auto md:left-auto md:gap-6 z-40`}
       >
         <div className="flex flex-col md:flex-row md:gap-6 md:items-center p-8 md:p-0">
-        {['firm', 'expertise', 'peoples', 'careers', 'contact'].map((link) => (
+          {[
+            { name: 'Firm', path: 'firm' },
+            { name: 'Expertise', path: 'expertise' },
+            { name: 'People', path: 'people' }, // Updated "People" link
+            { name: 'Careers', path: 'careers' },
+            { name: 'Contact', path: 'contact' }
+          ].map(({ name, path }) => (
             <a 
-              key={link}
-              href={`/${link}`} // Add a leading slash here
-              className={`py-2 text-2xl font-bold ${activeLink === link ? 'text-blue-500' : 'text-[#01553d]'}`} 
-              onClick={() => handleLinkClick(link)}
+              key={path}
+              href={`/${path}`}
+              className={`py-2 text-2xl font-bold ${activeLink === path ? 'text-blue-500' : 'text-[#01553d]'}`} 
+              onClick={() => handleLinkClick(path)}
             >
-              {link.charAt(0).toUpperCase() + link.slice(1)}
+              {name}
             </a>
           ))}
-          {/* <button className="bg-black text-white px-4 py-2 rounded-lg font-medium mt-4 md:mt-0">
-            Get for free
-          </button> */}
         </div>
       </nav>
     </header>
