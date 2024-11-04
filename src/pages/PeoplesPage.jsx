@@ -1,9 +1,10 @@
-/* eslint-disable no-unused-vars */
 import { useState, useEffect } from "react";
-import { db } from "../../firebase"; // Ensure correct Firebase config for Vite
+import { Link } from "react-router-dom";
+import { db } from "../../firebase";
 import { collection, getDocs, query, orderBy } from "firebase/firestore";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+
 
 const practiceAreas = [
   "ADR & Advocacy",
@@ -43,7 +44,6 @@ const PeoplePage = () => {
     fetchData();
   }, []);
 
-  // Filtering logic
   const filterPeople = () => {
     return people.filter((person) => {
       const matchesSearch = person.fullName
@@ -61,7 +61,6 @@ const PeoplePage = () => {
 
   return (
     <div className="min-h-screen font-sans">
-      {/* Header */}
       <header className="bg-[#01553d] text-white text-center py-12 px-6">
         <h1 className="text-3xl md:text-5xl font-bold">Meet the Team</h1>
         <p className="mt-4 text-lg">
@@ -70,7 +69,6 @@ const PeoplePage = () => {
         </p>
       </header>
 
-      {/* Search and Filters */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
           <input
@@ -106,7 +104,6 @@ const PeoplePage = () => {
           </select>
         </div>
 
-        {/* People Cards or Skeleton Loaders */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {isLoading
             ? Array(8)
@@ -125,10 +122,8 @@ const PeoplePage = () => {
                   </div>
                 ))
             : filterPeople().map((person) => (
-                <a
-                  href={`/staff/${person.fullName
-                    .replace(/\s+/g, '-')
-                    .toLowerCase()}`}
+                <Link
+                  to={`/people/${person.id}`}
                   key={person.id}
                   className="bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300"
                 >
@@ -152,11 +147,10 @@ const PeoplePage = () => {
                       View Profile
                     </span>
                   </div>
-                </a>
+                </Link>
               ))}
         </div>
 
-        {/* No Results Message */}
         {!isLoading && filterPeople().length === 0 && (
           <p className="text-center text-gray-500 mt-12">No results found.</p>
         )}
@@ -166,3 +160,7 @@ const PeoplePage = () => {
 };
 
 export default PeoplePage;
+
+
+
+

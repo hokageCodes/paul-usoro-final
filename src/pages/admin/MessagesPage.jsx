@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, onSnapshot, deleteDoc, doc } from "firebase/firestore";
 import { db } from "../../../firebase";
 
 const MessagesPage = () => {
@@ -8,25 +8,35 @@ const MessagesPage = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchMessages = async () => {
-      try {
-        const messagesCollection = collection(db, "contact"); // replace "contact" with your collection name
-        const messagesSnapshot = await getDocs(messagesCollection);
-        const messagesList = messagesSnapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        setMessages(messagesList);
-        setLoading(false);
-      } catch (err) {
-        console.error("Error fetching messages:", err);
-        setError("Failed to load messages.");
-        setLoading(false);
-      }
-    };
+    const messagesRef = collection(db, "contact");
 
-    fetchMessages();
+    const unsubscribe = onSnapshot(messagesRef, (snapshot) => {
+      const messagesList = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setMessages(messagesList);
+      setLoading(false);
+    }, (err) => {
+      console.error("Error fetching messages:", err);
+      setError("Failed to load messages.");
+      setLoading(false);
+    });
+
+    return () => unsubscribe();
   }, []);
+
+  const deleteMessage = async (id) => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this message?");
+    if (confirmDelete) {
+      try {
+        await deleteDoc(doc(db, "contact", id));
+      } catch (error) {
+        console.error("Error deleting message:", error);
+        alert("Failed to delete message.");
+      }
+    }
+  };
 
   const exportToCSV = () => {
     const csvHeader = ["Name,Email,Concern"];
@@ -63,6 +73,7 @@ const MessagesPage = () => {
             <th className="text-left px-4 py-2">Name</th>
             <th className="text-left px-4 py-2">Email</th>
             <th className="text-left px-4 py-2">Concern</th>
+            <th className="text-left px-4 py-2">Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -71,6 +82,14 @@ const MessagesPage = () => {
               <td className="px-4 py-2">{message.name}</td>
               <td className="px-4 py-2">{message.email}</td>
               <td className="px-4 py-2">{message.concern}</td>
+              <td className="px-4 py-2">
+                <button
+                  onClick={() => deleteMessage(message.id)}
+                  className="text-red-600 hover:text-red-800"
+                >
+                  Delete
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>

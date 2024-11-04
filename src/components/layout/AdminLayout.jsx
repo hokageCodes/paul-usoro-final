@@ -39,7 +39,7 @@ const AdminLayout = ({ children }) => {
         } md:translate-x-0 md:block`}
       >
         <div className="flex p-4">
-          <img src="/assets/img/puc-logo.png" alt="Logo" className="h-20" />
+          <img src="/assets/img/puc-logo.webp" alt="Logo" className="h-20" />
         </div>
 
         <nav>
@@ -61,7 +61,7 @@ const AdminLayout = ({ children }) => {
             <li className="group">
               <Link to="/admin/careers" className="flex items-center space-x-2 p-2">
                 <FaBriefcase />
-                {isSidebarOpen && <span>Careers</span>}
+                {isSidebarOpen && <span>Job Openings</span>}
               </Link>
               <div className="h-1 w-0 bg-white group-hover:w-full transition-all duration-300"></div>
             </li>
@@ -75,7 +75,7 @@ const AdminLayout = ({ children }) => {
             <li className="group">
               <Link to="/admin/upload/jobs" className="flex items-center space-x-2 p-2">
                 <FaChartBar />
-                {isSidebarOpen && <span>Job Openings</span>}
+                {isSidebarOpen && <span>Job Upload</span>}
               </Link>
             </li>
             <li className="group">

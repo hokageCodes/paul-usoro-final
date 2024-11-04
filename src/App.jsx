@@ -30,6 +30,7 @@ import MessagesPage from './pages/admin/MessagesPage';
 import JobPage from './pages/JobPage';
 import JobPostingForm from './pages/admin/JobUpload';
 import JobOpeningsPage from './pages/admin/CareersPage';
+import PersonProfile from './components/PersonProfile';
 
 // This component contains the routing logic
 const AppContent = () => {
@@ -42,6 +43,7 @@ const AppContent = () => {
         <Route path="/contact" element={<ContactForm />} />
         <Route path="/careers" element={<CareersPage />} />
         <Route path="/people" element={<PeoplesPage />} />
+        <Route path="/people/:id" element={<PersonProfile />} />
         <Route path="/job-opening" element={<JobPage />} />
         <Route path="/expertise" element={<ExpertisePage />} />
         <Route path="/expertise/adr-and-advocacy" element={<AdrAdvocacyPage />} />
@@ -67,7 +69,7 @@ const AppContent = () => {
           <Route path="upload/people" element={<PeopleUpload />} />  {/* People page route */}
           <Route path="upload/jobs" element={<JobPostingForm />} />  {/* People page route */}
           <Route path="messages" element={<MessagesPage />} />  {/* People page route */}
-          <Route path="careers" element={<JobOpeningsPage />} />  {/* People page route */}
+          <Route path="job-opening" element={<JobOpeningsPage />} />  {/* People page route */}
         </Route>
       </Route>
 

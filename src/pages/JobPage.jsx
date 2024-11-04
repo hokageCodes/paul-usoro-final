@@ -136,33 +136,40 @@ const JobPage = () => {
 
           {/* Job Listings */}
           <main className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-            {filteredJobs.map((job) => (
-              <div key={job.id} className="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between">
-                <div>
-                  <h3 className="text-xl font-semibold text-[#01553d]">{job.title}</h3>
-                  <div className="flex space-x-2 mt-2 mb-4">
-                    <span className="bg-gray-200 px-3 py-1 rounded-full text-sm">{job.experienceLevel}</span>
-                    <span className="bg-gray-200 px-3 py-1 rounded-full text-sm">{job.location}</span>
+            {filteredJobs.length > 0 ? (
+              filteredJobs.map((job) => (
+                <div key={job.id} className="bg-white p-6 rounded-lg shadow-lg flex flex-col justify-between">
+                  <div>
+                    <h3 className="text-xl font-semibold text-[#01553d]">{job.title}</h3>
+                    <div className="flex space-x-2 mt-2 mb-4">
+                      <span className="bg-gray-200 px-3 py-1 rounded-full text-sm">{job.experienceLevel}</span>
+                      <span className="bg-gray-200 px-3 py-1 rounded-full text-sm">{job.location}</span>
+                    </div>
+                    <p className="text-gray-700 mb-4">{job.description}</p>
                   </div>
-                  <p className="text-gray-700 mb-4">{job.description}</p>
+                  <div className="flex gap-2">
+                    <button
+                      className="border border-2 border-[#01553d] text-[#01553d] px-4 py-2 rounded"
+                      onClick={() => openModal("details", job)}
+                    >
+                      View Job Details
+                    </button>
+                    <button
+                      className="bg-green-600 text-white px-4 py-2 rounded"
+                      onClick={() => openModal("apply", job)}
+                    >
+                      Apply Here
+                    </button>
+                  </div>
                 </div>
-                <div className="flex gap-2">
-                  <button
-                    className="border border-2 border-[#01553d] text-[#01553d] px-4 py-2 rounded"
-                    onClick={() => openModal("details", job)}
-                  >
-                    View Job Details
-                  </button>
-                  <button
-                    className="bg-green-600 text-white px-4 py-2 rounded"
-                    onClick={() => openModal("apply", job)}
-                  >
-                    Apply Here
-                  </button>
-                </div>
+              ))
+            ) : (
+              <div className="col-span-full text-center text-gray-500">
+                <p>No job openings are available at the moment. Please check back later or adjust your filters.</p>
               </div>
-            ))}
+            )}
           </main>
+
         </div>
 
         {/* Modal */}

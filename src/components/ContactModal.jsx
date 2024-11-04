@@ -2,7 +2,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { db } from '../../firebase'; // Adjust the import based on your file structure
-import { collection, addDoc, serverTimestamp  } from 'firebase/firestore';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
 const questions = [
   { id: 1, label: "What's your name?", field: 'name' },
@@ -39,10 +39,21 @@ const ContactModal = ({ closeModal }) => {
   const handleSubmit = async () => {
     setLoading(true);
     try {
+      // Add the new contact message to the contact collection
       await addDoc(collection(db, 'contact'), {
         ...formData,
         createdAt: serverTimestamp(), // Add the timestamp here
       });
+
+      // Create an update entry
+      const updateData = {
+        message: `${formData.name} has submitted a new contact message regarding "${formData.concern}".`,
+        timestamp: serverTimestamp(),
+      };
+
+      // Add the update to the updates collection
+      await addDoc(collection(db, 'updates'), updateData);
+
       alert('Your message has been submitted successfully!');
       closeModal();
     } catch (error) {
@@ -52,6 +63,7 @@ const ContactModal = ({ closeModal }) => {
       setLoading(false);
     }
   };
+
   const handleBackdropClick = (e) => {
     if (modalRef.current && !modalRef.current.contains(e.target)) {
       closeModal();
@@ -93,7 +105,7 @@ const ContactModal = ({ closeModal }) => {
                 name={questions[step].field}
                 value={formData[questions[step].field]}
                 onChange={handleChange}
-                className="w-full p-2 border rounded mb-4"
+                className="w-full p-2 border rounded mb-4 text-[#01553d] text-xl"
               />
               <button
                 onClick={step < questions.length - 1 ? handleNextStep : handleSubmit}

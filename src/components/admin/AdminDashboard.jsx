@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, onSnapshot } from "firebase/firestore";
 import { db } from "../../../firebase";
 
 const formatTimestamp = (timestamp) => {
@@ -11,15 +11,10 @@ const formatTimestamp = (timestamp) => {
   const hours = Math.floor(minutes / 60);
   const days = Math.floor(hours / 24);
 
-  if (days > 0) {
-    return days === 1 ? "yesterday" : `${days} days ago`;
-  } else if (hours > 0) {
-    return `${hours} hours ago`;
-  } else if (minutes > 0) {
-    return `${minutes} minutes ago`;
-  } else {
-    return "just now";
-  }
+  if (days > 0) return days === 1 ? "yesterday" : `${days} days ago`;
+  else if (hours > 0) return `${hours} hours ago`;
+  else if (minutes > 0) return `${minutes} minutes ago`;
+  return "just now";
 };
 
 const AdminDashboard = () => {
@@ -31,7 +26,7 @@ const AdminDashboard = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchCounts = async () => {
       try {
         setLoading(true);
 
@@ -44,12 +39,6 @@ const AdminDashboard = () => {
         const peopleSnapshot = await getDocs(collection(db, "people"));
         setPeopleCount(peopleSnapshot.size);
 
-        // Fetch recent updates
-        const updatesSnapshot = await getDocs(collection(db, "updates"));
-        const updatesData = updatesSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-        // Limit to the most recent 5 updates
-        setRecentUpdates(updatesData.sort((a, b) => b.timestamp - a.timestamp).slice(0, 5));
-
         setLoading(false);
       } catch (err) {
         console.error("Error fetching data:", err);
@@ -58,7 +47,28 @@ const AdminDashboard = () => {
       }
     };
 
-    fetchData();
+    // Set up real-time listeners for updates and contact messages
+    const updatesRef = collection(db, "updates");
+    const contactRef = collection(db, "contact");
+
+    const unsubscribeUpdates = onSnapshot(updatesRef, (snapshot) => {
+      const updatesData = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setRecentUpdates(updatesData.sort((a, b) => b.timestamp - a.timestamp).slice(0, 5));
+    });
+
+    const unsubscribeContact = onSnapshot(contactRef, (snapshot) => {
+      setContactCount(snapshot.size);
+    });
+
+    fetchCounts();
+
+    return () => {
+      unsubscribeUpdates();
+      unsubscribeContact();
+    };
   }, []);
 
   if (loading) return <p>Loading dashboard overview...</p>;
